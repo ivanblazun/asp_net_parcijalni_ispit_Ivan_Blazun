@@ -15,7 +15,9 @@ namespace asp_net_parcijalni_ispit_Ivan_Blazun.Models
         [StringLength(150)]
         public string? Address { get; set; }
 
-        [ForeignKey("UserId")]
-        public TodoList TodoList { get; set; }
+        [ForeignKey("TodoList")]
+        public int? TodoListId { get; set; }
+        public TodoList? TodoList { get; set; }
+
     }
 }

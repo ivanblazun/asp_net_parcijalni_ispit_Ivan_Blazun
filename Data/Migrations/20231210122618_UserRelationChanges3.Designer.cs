@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using asp_net_parcijalni_ispit_Ivan_Blazun.Data;
 
@@ -11,9 +12,10 @@ using asp_net_parcijalni_ispit_Ivan_Blazun.Data;
 namespace asp_net_parcijalni_ispit_Ivan_Blazun.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231210122618_UserRelationChanges3")]
+    partial class UserRelationChanges3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -79,7 +81,7 @@ namespace asp_net_parcijalni_ispit_Ivan_Blazun.Data.Migrations
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("TodoListId")
+                    b.Property<int>("TodoListId")
                         .HasColumnType("int");
 
                     b.Property<bool>("TwoFactorEnabled")
@@ -115,9 +117,6 @@ namespace asp_net_parcijalni_ispit_Ivan_Blazun.Data.Migrations
                     b.Property<string>("Description")
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
-
-                    b.Property<bool>("IsDone")
-                        .HasColumnType("bit");
 
                     b.Property<int>("ListId")
                         .HasColumnType("int");
@@ -303,7 +302,9 @@ namespace asp_net_parcijalni_ispit_Ivan_Blazun.Data.Migrations
                 {
                     b.HasOne("asp_net_parcijalni_ispit_Ivan_Blazun.Models.TodoList", "TodoList")
                         .WithMany()
-                        .HasForeignKey("TodoListId");
+                        .HasForeignKey("TodoListId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("TodoList");
                 });

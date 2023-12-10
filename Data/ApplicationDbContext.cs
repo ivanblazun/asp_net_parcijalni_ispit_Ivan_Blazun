@@ -1,6 +1,7 @@
 ﻿using asp_net_parcijalni_ispit_Ivan_Blazun.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection.Emit;
 
 namespace asp_net_parcijalni_ispit_Ivan_Blazun.Data
 {
@@ -10,6 +11,7 @@ namespace asp_net_parcijalni_ispit_Ivan_Blazun.Data
             : base(options)
         {
         }
+
 
         public DbSet<AspNetUser> AspNetUsers { get; set; }
         public DbSet<TaskItem> TaskItems { get; set; }

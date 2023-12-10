@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using asp_net_parcijalni_ispit_Ivan_Blazun.Data;
 
@@ -11,9 +12,10 @@ using asp_net_parcijalni_ispit_Ivan_Blazun.Data;
 namespace asp_net_parcijalni_ispit_Ivan_Blazun.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231210114938_UserId")]
+    partial class UserId
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -79,11 +81,11 @@ namespace asp_net_parcijalni_ispit_Ivan_Blazun.Data.Migrations
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("TodoListId")
-                        .HasColumnType("int");
-
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("bit");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
 
                     b.Property<string>("UserName")
                         .HasMaxLength(256)
@@ -99,7 +101,7 @@ namespace asp_net_parcijalni_ispit_Ivan_Blazun.Data.Migrations
                         .HasDatabaseName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
-                    b.HasIndex("TodoListId");
+                    b.HasIndex("UserId");
 
                     b.ToTable("AspNetUsers", (string)null);
                 });
@@ -115,9 +117,6 @@ namespace asp_net_parcijalni_ispit_Ivan_Blazun.Data.Migrations
                     b.Property<string>("Description")
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
-
-                    b.Property<bool>("IsDone")
-                        .HasColumnType("bit");
 
                     b.Property<int>("ListId")
                         .HasColumnType("int");
@@ -153,11 +152,10 @@ namespace asp_net_parcijalni_ispit_Ivan_Blazun.Data.Migrations
 
                     b.Property<string>("UserId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("TodoLists");
                 });
@@ -303,7 +301,9 @@ namespace asp_net_parcijalni_ispit_Ivan_Blazun.Data.Migrations
                 {
                     b.HasOne("asp_net_parcijalni_ispit_Ivan_Blazun.Models.TodoList", "TodoList")
                         .WithMany()
-                        .HasForeignKey("TodoListId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("TodoList");
                 });
@@ -317,17 +317,6 @@ namespace asp_net_parcijalni_ispit_Ivan_Blazun.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("List");
-                });
-
-            modelBuilder.Entity("asp_net_parcijalni_ispit_Ivan_Blazun.Models.TodoList", b =>
-                {
-                    b.HasOne("asp_net_parcijalni_ispit_Ivan_Blazun.Models.AspNetUser", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

@@ -12,5 +12,7 @@ namespace asp_net_parcijalni_ispit_Ivan_Blazun.Models
         [StringLength(200)]
         public string? Type { get; set; }
         public TodoList List { get; set; }
+
+        public bool IsDone { get; set; } = false;
     }
 }
