@@ -9,7 +9,7 @@ namespace asp_net_parcijalni_ispit_Ivan_Blazun.Models
         [StringLength(50)]
         public string ListName { get; set; }
 
-        [ForeignKey("User")]
+        [ForeignKey("UserId")]
         public string UserId { get; set; }
         public AspNetUser User { get; set; }
         public List<TaskItem> TaskItems { get; set; }

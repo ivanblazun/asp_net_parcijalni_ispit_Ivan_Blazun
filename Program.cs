@@ -5,8 +5,12 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddSession();
-{ }
+builder.Services.AddSession(options =>
+{
+	options.IdleTimeout = TimeSpan.FromMinutes(30);
+	options.Cookie.HttpOnly = true;
+	options.Cookie.IsEssential = true;
+});
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 { }
 
@@ -15,11 +19,30 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+builder.Services.AddRazorPages();
+builder.Services.AddDefaultIdentity<AspNetUser>(options =>
+{
+	options.SignIn.RequireConfirmedAccount = false;
+	options.Password.RequiredLength = 2;
+	options.Password.RequireUppercase = false;
+	options.Password.RequireLowercase = false;
+	options.Password.RequireNonAlphanumeric = false;
+	options.Password.RequiredUniqueChars = 2;
+	options.User.RequireUniqueEmail = true;
+	options.Lockout.MaxFailedAccessAttempts = 15;
+	options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(15);
+})
+	.AddRoles<IdentityRole>()
+	.AddEntityFrameworkStores<ApplicationDbContext>()
+	.AddDefaultTokenProviders();
+builder.Services.AddSingleton<AspNetUser>();
+builder.Services.AddTransient<TodoList>();
+builder.Services.AddTransient<TaskItem>();
 
-builder.Services.AddDefaultIdentity<AspNetUser>(
-    options => options.SignIn.RequireConfirmedAccount = true)
-         .AddRoles<IdentityRole>()
-         .AddEntityFrameworkStores<ApplicationDbContext>();
+//builder.Services.AddDefaultIdentity<AspNetUser>(
+//    options => options.SignIn.RequireConfirmedAccount = true)
+//         .AddRoles<IdentityRole>()
+//         .AddEntityFrameworkStores<ApplicationDbContext>();
 
 builder.Services.AddControllersWithViews();
 

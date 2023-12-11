@@ -18,6 +18,8 @@ namespace asp_net_parcijalni_ispit_Ivan_Blazun.Models
         [ForeignKey("TodoList")]
         public int? TodoListId { get; set; }
         public TodoList? TodoList { get; set; }
+		[ForeignKey("TaskItemId")]
+		public virtual ICollection<TaskItem> TaskItem { get; set; } = new List<TaskItem>();
 
-    }
+	}
 }

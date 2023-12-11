@@ -33,15 +33,14 @@
 				<input asp-for="@Model.Drzava" class="form-control" placeholder="Država" />
 				<label asp-for="@Model.Drzava">Država</label>
 			</div>
-			<button type="submit" class="btn btn-primary" value="Submit" asp-action="UpdateData" asp-controller="Profil">Spremi</button>
+			<button type="submit" class="btn btn-primary" value="Submit" asp-controller="Profil" asp-action="UpdateData">Spremi</button>
 		</form>
 	</div>
 </div>
-<hr class="border border-danger border-2 opacity-50" />
+
 @{
 	System.Diagnostics.Debug.Assert(Model.TaskItems != null, "Model.TaskItems != null");
 }
-<h3 class="mb-4">Ako je vaš zadatak završen, označite pripadni kvadratić</h3>
 
 <table class="table">
 	<thead>

@@ -132,7 +132,7 @@ namespace asp_net_parcijalni_ispit_Ivan_Blazun.Data.Migrations
                     b.ToTable("TaskItems");
                 });
 
-            modelBuilder.Entity("asp_net_parcijalni_ispit_Ivan_Blazun.Models.TodoList", b =>
+            modelBuilder.Entity("asp_net_parcijalni_ispit_Ivan_Blazun.Models.List", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
